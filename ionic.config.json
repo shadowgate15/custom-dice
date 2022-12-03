@@ -1,0 +1,7 @@
+{
+  "name": "Custom Dice",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
