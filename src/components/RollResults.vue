@@ -22,7 +22,7 @@
     </Transition>
     <ion-fab-button
       @click="onShowResults"
-      :color="showResults ? 'secondary' : 'primary'"
+      :color="showResults ? 'tertiary' : 'secondary'"
     >
       <ion-icon :icon="showResults ? closeOutline : listOutline" />
     </ion-fab-button>

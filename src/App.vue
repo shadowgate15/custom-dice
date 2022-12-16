@@ -1,7 +1,9 @@
 <template>
   <ion-app>
     <ion-router-outlet />
+
     <canvas id="dice-canvas"></canvas>
+
     <RollResults v-if="isHome" />
   </ion-app>
 </template>
@@ -15,7 +17,7 @@ import RollResults from "@/components/RollResults";
 
 const route = useRoute();
 
-const isHome = computed(() => route.name === "Home");
+const isHome = computed(() => route.name === "home");
 
 onMounted(async () => {
   await initDiceBox("#dice-canvas");

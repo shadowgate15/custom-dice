@@ -11,16 +11,18 @@ export type DiceNotationMixed =
 export interface DiceGroup {
   uuid: string;
   name: string;
-  dice: {
-    notation: DiceNotationMixed;
-    options?: DiceOptions;
-  };
+  dice: Dice;
+}
+
+export interface Dice {
+  notation: DiceNotationMixed;
+  options?: DiceOptions;
 }
 
 // https://fantasticdice.games/docs/usage/objects#roll-object
 export interface DiceNotation {
   /** the type of die to be rolled. Either a number such as 20 or a die type such as "fate". */
-  sides: number;
+  sides: DiceSides;
 
   /** the number of dice to be rolled. Defaults to 1. */
   qty?: number;
@@ -29,15 +31,28 @@ export interface DiceNotation {
   modifier?: number;
 
   /** the theme's 'systemName' for this roll */
-  theme?: string;
+  theme?: DiceThemes;
 
   /** HEX value for the theme's material color */
   themeColor?: string;
 }
 
+export enum DiceSides {
+  d4 = 4,
+  d6 = 6,
+  d8 = 8,
+  d10 = 10,
+  d12 = 12,
+  d20 = 20,
+}
+
+export enum DiceThemes {
+  DEFAULT = "default",
+}
+
 // https://fantasticdice.games/docs/usage/methods#options
 export interface DiceOptions {
-  theme?: string;
+  theme?: DiceThemes;
   themeColor?: string;
   newStartPoint?: boolean;
 }
@@ -51,10 +66,10 @@ export interface DieResult {
   rollId: number;
 
   /** the type of die */
-  sides: number;
+  sides: DiceSides;
 
   /** the theme that was assigned to this die */
-  theme: string;
+  theme: DiceThemes;
 
   /** HEX value for the theme's material color */
   themeColor?: string;
@@ -78,10 +93,10 @@ export interface RollGroup {
   rolls: DieResult[];
 
   /** the type of die used */
-  sides: number;
+  sides: DiceSides;
 
   /** the theme for this group of dice */
-  theme: string;
+  theme: DiceThemes;
 
   /** the theme color for this group of dice */
   themeColor: string;
