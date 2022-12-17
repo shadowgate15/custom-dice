@@ -46,6 +46,8 @@ export async function initDiceBox(id: string) {
         .fromTo("opacity", "1", "0");
 
       await animation.play();
+
+      diceBox.clear();
     },
   });
 

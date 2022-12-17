@@ -67,6 +67,26 @@
             />
 
             <ion-list class="dice-inputs">
+              <ion-item
+                :class="{
+                  'ion-valid': die.qty > 0,
+                  'ion-invalid': die.qty <= 0,
+                }"
+              >
+                <ion-label>Number</ion-label>
+
+                <ion-input
+                  v-model="die.qty"
+                  type="number"
+                  placeholder="Number of dice"
+                  :clearInput="true"
+                >
+                </ion-input>
+
+                <ion-note slot="error">
+                  Number is required and must be greater than 0.
+                </ion-note>
+              </ion-item>
               <ion-item>
                 <ion-label> Sides </ion-label>
 

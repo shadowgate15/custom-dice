@@ -1,25 +1,8 @@
 <template>
-  <ion-item class="list-item">
+  <ion-item class="list-item" @click="onRoll">
     <Transition appear name="label">
       <ion-label class="ion-text-wrap">
-        <ion-grid>
-          <ion-row class="ion-align-items-center">
-            <ion-col>
-              <h2>{{ group.name }}</h2>
-            </ion-col>
-            <ion-col size="auto">
-              <ion-button
-                class="roll-btn"
-                shape="round"
-                fill="outline"
-                size="small"
-                @click="onRoll"
-              >
-                Roll
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+        <h2>{{ group.name }}</h2>
       </ion-label>
     </Transition>
   </ion-item>
@@ -27,14 +10,7 @@
 
 <script setup lang="ts">
 import { defineProps } from "vue";
-import {
-  IonLabel,
-  IonItem,
-  IonButton,
-  IonGrid,
-  IonCol,
-  IonRow,
-} from "@ionic/vue";
+import { IonLabel, IonItem } from "@ionic/vue";
 import { DiceGroup } from "@/stores/dice-groups";
 import { rollDice } from "@/composables/dice-box";
 
