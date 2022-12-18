@@ -15,7 +15,7 @@
 
   <ion-content>
     <ion-item ref="nameInput">
-      <ion-label>Name</ion-label>
+      <ion-label> Name </ion-label>
 
       <ion-input
         v-model="name"
@@ -30,7 +30,7 @@
     <ion-item-divider> </ion-item-divider>
 
     <ion-item>
-      <ion-label>Theme</ion-label>
+      <ion-label> Theme </ion-label>
 
       <ion-select
         class="ion-text-capitalize"
@@ -164,12 +164,14 @@ import {
 import { addCircle, removeCircle } from "ionicons/icons";
 import { ref } from "vue";
 import { DiceNotation, DiceSides, DiceThemes } from "@/stores/dice-groups";
+import { COLOR_SELECT } from "@/utils/color-select";
 
 const nameInput = ref<typeof IonItem>();
 const diceInput = ref<typeof IonItem>();
 
 const name = ref<string>();
 const theme = ref<DiceThemes>(DiceThemes.DEFAULT);
+const color = ref<string>(COLOR_SELECT["peter river"]);
 const dice = ref<DiceNotation[]>([]);
 
 const themes = Object.values<string>(DiceThemes);
@@ -195,6 +197,7 @@ function confirm() {
         notation: dice.value,
         options: {
           theme: theme.value,
+          themeColor: color.value,
         },
       },
     },
@@ -204,28 +207,28 @@ function confirm() {
 
 function validateName(): boolean {
   if (name.value?.length) {
-    nameInput.value.$el.classList.remove("ion-invalid");
-    nameInput.value.$el.classList.add("ion-valid");
+    nameInput.value?.$el.classList.remove("ion-invalid");
+    nameInput.value?.$el.classList.add("ion-valid");
 
     return true;
   }
 
-  nameInput.value.$el.classList.remove("ion-valid");
-  nameInput.value.$el.classList.add("ion-invalid");
+  nameInput.value?.$el.classList.remove("ion-valid");
+  nameInput.value?.$el.classList.add("ion-invalid");
 
   return false;
 }
 
 function validateDice(): boolean {
   if (dice.value?.length) {
-    diceInput.value.$el.classList.remove("ion-invalid");
-    diceInput.value.$el.classList.add("ion-valid");
+    diceInput.value?.$el.classList.remove("ion-invalid");
+    diceInput.value?.$el.classList.add("ion-valid");
 
     return true;
   }
 
-  diceInput.value.$el.classList.remove("ion-valid");
-  diceInput.value.$el.classList.add("ion-invalid");
+  diceInput.value?.$el.classList.remove("ion-valid");
+  diceInput.value?.$el.classList.add("ion-invalid");
 
   return false;
 }
@@ -264,6 +267,16 @@ function onDelete(index: number) {
 <style scoped>
 .dice-inputs {
   width: 100%;
+}
+
+.swatch {
+  /* Rounded border */
+  border-radius: 9999px;
+  height: 1.5rem;
+  width: 1.5rem;
+
+  /* Space between items */
+  margin: 0.5rem;
 }
 
 .dice-list-move,
