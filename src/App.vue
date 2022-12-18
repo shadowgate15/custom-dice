@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet } from "@ionic/vue";
-import { onMounted, computed } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { initDiceBox } from "@/composables/dice-box";
 import RollResults from "@/components/RollResults";
@@ -28,8 +28,8 @@ onMounted(async () => {
 #dice-canvas {
   position: absolute;
 
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 
   z-index: 10;
 

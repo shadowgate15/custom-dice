@@ -9,6 +9,7 @@ import { computed } from "vue";
 import { createAnimation, Animation } from "@ionic/vue";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "@/utils/dayjs";
+import { COLOR_SELECT } from "@/utils/color-select";
 
 export let diceBox: typeof DiceBox;
 
@@ -25,6 +26,7 @@ export async function initDiceBox(id: string) {
   diceBox = new DiceBox(id, {
     scale: 4,
     throwForce: 10,
+    themeColor: COLOR_SELECT["peter river"],
     onRollComplete: async (results: RollGroup[]) => {
       diceBox.canvas.classList.remove("rolling");
 

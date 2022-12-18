@@ -6,6 +6,7 @@
     "dev:ios": "ionic capacitor run ios -l --external",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:ios": "ionic capacitor copy ios && ionic capacitor update",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
