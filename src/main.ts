@@ -23,8 +23,11 @@ import "@ionic/vue/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import { createPinia } from "pinia";
+import { ionicStoragePlugin } from "./utils/storage";
 
 const pinia = createPinia();
+pinia.use(ionicStoragePlugin);
+
 const app = createApp(App).use(IonicVue).use(pinia).use(router);
 
 router.isReady().then(() => {
