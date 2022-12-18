@@ -1,18 +1,34 @@
 <template>
-  <ion-item class="list-item" @click="onRoll">
-    <Transition appear name="label">
-      <ion-label class="ion-text-wrap">
-        <h2>{{ group.name }}</h2>
-      </ion-label>
-    </Transition>
-  </ion-item>
+  <ion-item-sliding>
+    <ion-item class="list-item" @click="onRoll">
+      <Transition appear name="label">
+        <ion-label class="ion-text-wrap">
+          <h2>{{ group.name }}</h2>
+        </ion-label>
+      </Transition>
+    </ion-item>
+
+    <ion-item-options side="end">
+      <ion-item-option color="danger" @click="onDelete()">
+        Delete
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from "vue";
-import { IonLabel, IonItem } from "@ionic/vue";
-import { DiceGroup } from "@/stores/dice-groups";
+import {
+  IonLabel,
+  IonItem,
+  IonItemOptions,
+  IonItemOption,
+  IonItemSliding,
+} from "@ionic/vue";
+import { DiceGroup, useDiceGroupsStore } from "@/stores/dice-groups";
 import { rollDice } from "@/composables/dice-box";
+
+const diceStore = useDiceGroupsStore();
 
 const props = defineProps<{
   group: DiceGroup;
@@ -24,6 +40,10 @@ async function onRoll() {
     props.group.dice.notation,
     props.group.dice.options
   );
+}
+
+function onDelete() {
+  diceStore.deleteGroup(props.group.uuid);
 }
 </script>
 

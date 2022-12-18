@@ -163,6 +163,10 @@ export const useDiceGroupsStore = defineStore("dice-groups", {
 
       return group;
     },
+    deleteGroup(uuid: string): void {
+      this.results = this.results.filter((r) => r.uuid !== uuid);
+      this.groups.delete(uuid);
+    },
   },
 });
 
