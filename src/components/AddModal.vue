@@ -49,6 +49,16 @@
       </ion-select>
     </ion-item>
 
+    <ion-item @click="openColorModal(-1)">
+      <ion-label> Color </ion-label>
+
+      <div
+        class="swatch"
+        :style="{ 'background-color': color }"
+        slot="end"
+      ></div>
+    </ion-item>
+
     <ion-item-divider> </ion-item-divider>
 
     <ion-list>
@@ -58,7 +68,7 @@
           :key="index"
           :disabled="true"
         >
-          <ion-item>
+          <ion-item lines="full">
             <ion-icon
               slot="start"
               :icon="removeCircle"
@@ -116,6 +126,16 @@
                   </ion-select-option>
                 </ion-select>
               </ion-item>
+
+              <ion-item @click="openColorModal(index)">
+                <ion-label> Color </ion-label>
+
+                <div
+                  class="swatch"
+                  :style="{ 'background-color': die.themeColor || color }"
+                  slot="end"
+                ></div>
+              </ion-item>
             </ion-list>
           </ion-item>
 
@@ -162,9 +182,10 @@ import {
   modalController,
 } from "@ionic/vue";
 import { addCircle, removeCircle } from "ionicons/icons";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { DiceNotation, DiceSides, DiceThemes } from "@/stores/dice-groups";
 import { COLOR_SELECT } from "@/utils/color-select";
+import ColorModal from "@/components/ColorModal";
 
 const nameInput = ref<typeof IonItem>();
 const diceInput = ref<typeof IonItem>();
@@ -254,6 +275,26 @@ async function onItemOptions(ev: CustomEvent) {
 
   if (slider.close) {
     return slider.close();
+  }
+}
+
+async function openColorModal(index: number) {
+  const modal = await modalController.create({
+    component: ColorModal,
+    breakpoints: [0.0, 0.5, 1.0],
+    initialBreakpoint: 0.5,
+  });
+
+  await modal.present();
+
+  const { data, role } = await modal.onDidDismiss<string>();
+
+  if (role === "ok" && data) {
+    if (index === -1) {
+      color.value = data;
+    } else {
+      dice.value[index].themeColor = data;
+    }
   }
 }
 

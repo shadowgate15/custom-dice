@@ -75,7 +75,7 @@ async function onAdd() {
 
   const { data, role } = await modal.onDidDismiss<Omit<DiceGroup, "uuid">>();
 
-  if (role == "confirm" && data) {
+  if (role === "confirm" && data) {
     diceStore.addGroup(data);
   }
 }

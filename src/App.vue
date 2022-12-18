@@ -2,7 +2,7 @@
   <ion-app>
     <ion-router-outlet />
 
-    <canvas id="dice-canvas"></canvas>
+    <canvas ref="canvas" id="dice-canvas"></canvas>
 
     <RollResults v-if="isHome" />
   </ion-app>
@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet } from "@ionic/vue";
-import { onMounted, computed, ref } from "vue";
+import { computed, watchEffect, ref } from "vue";
 import { useRoute } from "vue-router";
 import { initDiceBox } from "@/composables/dice-box";
 import RollResults from "@/components/RollResults";
@@ -19,8 +19,12 @@ const route = useRoute();
 
 const isHome = computed(() => route.name === "home");
 
-onMounted(async () => {
-  await initDiceBox("#dice-canvas");
+const canvas = ref<HTMLCanvasElement>();
+
+watchEffect(async () => {
+  if (canvas.value) {
+    await initDiceBox("#dice-canvas");
+  }
 });
 </script>
 
