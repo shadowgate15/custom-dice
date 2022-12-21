@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet } from "@ionic/vue";
-import { computed, watchEffect, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { initDiceBox } from "@/composables/dice-box";
 import RollResults from "@/components/RollResults";
@@ -21,10 +21,8 @@ const isHome = computed(() => route.name === "home");
 
 const canvas = ref<HTMLCanvasElement>();
 
-watchEffect(async () => {
-  if (canvas.value) {
-    await initDiceBox("#dice-canvas");
-  }
+onMounted(async () => {
+  await initDiceBox("#dice-canvas");
 });
 </script>
 
