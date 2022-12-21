@@ -2,24 +2,14 @@
   <ion-app>
     <ion-router-outlet />
 
-    <canvas ref="canvas" id="dice-canvas"></canvas>
-
-    <RollResults v-if="isHome" />
+    <canvas id="dice-canvas"></canvas>
   </ion-app>
 </template>
 
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet } from "@ionic/vue";
-import { computed, ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { onMounted } from "vue";
 import { initDiceBox } from "@/composables/dice-box";
-import RollResults from "@/components/RollResults";
-
-const route = useRoute();
-
-const isHome = computed(() => route.name === "home");
-
-const canvas = ref<HTMLCanvasElement>();
 
 onMounted(async () => {
   await initDiceBox("#dice-canvas");

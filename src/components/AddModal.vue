@@ -182,7 +182,7 @@ import {
   modalController,
 } from "@ionic/vue";
 import { addCircle, removeCircle } from "ionicons/icons";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { DiceNotation, DiceSides, DiceThemes } from "@/stores/dice-groups";
 import { COLOR_SELECT } from "@/utils/color-select";
 import ColorModal from "@/components/ColorModal";
