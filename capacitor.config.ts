@@ -5,6 +5,11 @@ const config: CapacitorConfig = {
   appName: "Custom Dice",
   webDir: "dist",
   bundledWebRuntime: false,
+  plugins: {
+    SplashScreen: {
+      launchAutoHide: false,
+    },
+  },
 };
 
 export default config;

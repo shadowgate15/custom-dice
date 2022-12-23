@@ -22,8 +22,10 @@ import "@ionic/vue/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+
 import { createPinia } from "pinia";
 import { ionicStoragePlugin } from "./utils/storage";
+import { SplashScreen } from "@capacitor/splash-screen";
 
 const pinia = createPinia();
 pinia.use(ionicStoragePlugin);
@@ -32,4 +34,7 @@ const app = createApp(App).use(IonicVue).use(pinia).use(router);
 
 router.isReady().then(() => {
   app.mount("#app");
+
+  // Hide the splash screen once the app is ready
+  SplashScreen.hide();
 });
