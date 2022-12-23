@@ -1,5 +1,5 @@
 <template>
-  <ion-item>
+  <ion-item lines="full">
     <RollResultContent :result="result" />
   </ion-item>
 </template>

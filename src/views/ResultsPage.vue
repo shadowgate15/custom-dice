@@ -14,7 +14,7 @@
 
         <ion-list>
           <RollResultListItem
-            v-for="result in diceStore.results"
+            v-for="result in results"
             :key="result.id"
             :result="result"
           />
@@ -35,6 +35,9 @@ import {
 } from "@ionic/vue";
 import RollResultListItem from "@/components/RollResultListItem";
 import { useDiceGroupsStore } from "@/stores/dice-groups";
+import { computed } from "vue";
 
 const diceStore = useDiceGroupsStore();
+
+const results = computed(() => [...diceStore.results].reverse());
 </script>
