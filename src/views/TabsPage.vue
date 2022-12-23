@@ -26,6 +26,7 @@ import {
   IonLabel,
   IonPage,
   IonRouterOutlet,
+  IonIcon,
 } from "@ionic/vue";
 import { dice, list } from "ionicons/icons";
 </script>
