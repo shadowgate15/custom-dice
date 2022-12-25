@@ -1,4 +1,5 @@
 import {
+  DiceNotation,
   DiceNotationMixed,
   DiceOptions,
   RollGroup,
@@ -73,7 +74,24 @@ export async function rollDice(
     diceBox.canvas.classList.add("rolling");
 
     uuid = id;
-    await diceBox.roll(notation, options);
+
+    // create roll notation
+    // have to create a new object because the dice-box library
+    // modifies the object passed in
+    const roll = [];
+    const notationArray = Array.isArray(notation) ? notation : [notation];
+
+    const createRollObject = (notation: DiceNotation) => {
+      const { qty, sides, theme, themeColor } = notation;
+
+      return { qty, sides, theme, themeColor };
+    };
+
+    for (const n of notationArray) {
+      roll.push(typeof n === "string" ? n : createRollObject(n));
+    }
+
+    await diceBox.roll(roll, options);
   }
 }
 

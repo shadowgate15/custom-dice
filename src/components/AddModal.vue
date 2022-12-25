@@ -215,7 +215,10 @@ function confirm() {
     {
       name: name.value,
       dice: {
-        notation: dice.value,
+        notation: dice.value.map((d) => ({
+          ...d,
+          qty: typeof d.qty === "string" ? parseInt(d.qty) : d.qty,
+        })),
         options: {
           theme: theme.value,
           themeColor: color.value,

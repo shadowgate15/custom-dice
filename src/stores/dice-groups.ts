@@ -149,9 +149,14 @@ export const useDiceGroupsStore = defineStore("dice-groups", {
             },
           }),
           createDiceGroup({
-            name: "Red 1d20",
+            name: "Red 2d20",
             dice: {
-              notation: "1d20",
+              notation: [
+                {
+                  qty: 2,
+                  sides: DiceSides.d20,
+                },
+              ],
               options: {
                 themeColor: "#e74c3c",
               },
