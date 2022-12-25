@@ -111,6 +111,7 @@ export interface RollResult {
   results: RollGroup[];
   total: number;
   date: dayjs.Dayjs;
+  shown?: boolean;
 }
 
 export function isRollResult(obj: any): obj is RollResult {

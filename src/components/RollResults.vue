@@ -1,98 +1,70 @@
 <template>
-  <ion-fab class="ion-margin" slot="fixed" vertical="bottom" horizontal="end">
-    <Transition name="list">
-      <div class="result-list" v-if="showResults && diceStore.results.length">
-        <TransitionGroup name="roll-results">
-          <RollResultCard
-            v-for="result in diceStore.results"
-            :key="result.id"
-            :result="result"
-          />
-        </TransitionGroup>
-      </div>
-      <div class="result-list" v-else-if="!showResults && recentResults.length">
-        <TransitionGroup name="roll-results">
-          <RollResultCard
-            v-for="result in recentResults"
-            :key="result.id"
-            :result="result"
-          />
-        </TransitionGroup>
-      </div>
-    </Transition>
-    <ion-fab-button
-      @click="onShowResults"
-      :color="showResults ? 'tertiary' : 'secondary'"
-    >
-      <ion-icon :icon="showResults ? closeOutline : listOutline" />
-    </ion-fab-button>
-  </ion-fab>
+  <Transition name="list">
+    <div class="result-list" v-if="recentResults.length">
+      <TransitionGroup name="roll-results">
+        <ion-card v-for="result in recentResults" :key="result.id">
+          <RollResultContent :result="result" />
+        </ion-card>
+      </TransitionGroup>
+    </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
-import { IonFab, IonFabButton, IonIcon } from "@ionic/vue";
+import { IonCard } from "@ionic/vue";
 import { ref } from "vue";
-import { listOutline, closeOutline } from "ionicons/icons";
 import {
   useDiceGroupsStore,
   RollResult,
-  isRollResult,
   DiceGroupsState,
 } from "@/stores/dice-groups";
-import RollResultCard from "@/components/RollResultCard";
-import { SubscriptionCallbackMutation } from "pinia";
-
-const showResults = ref(false);
-const recentResults = ref<RollResult[]>([]);
+import RollResultContent from "@/components/RollResultContent.vue";
+import dayjs from "@/utils/dayjs";
 
 const diceStore = useDiceGroupsStore();
 
-function onShowResults() {
-  showResults.value = !showResults.value;
-}
+const recentResults = ref<RollResult[]>([]);
 
-diceStore.$subscribe(
-  (mutation: SubscriptionCallbackMutation<DiceGroupsState>) => {
-    const events = Array.isArray(mutation.events)
-      ? mutation.events
-      : [mutation.events];
+diceStore.$subscribe((_, state: DiceGroupsState) => {
+  const results = state.results.filter(
+    (r) => !r.shown && r.date.isAfter(dayjs().subtract(5, "seconds"))
+  );
 
-    for (const e of events) {
-      const { newValue } = e;
+  recentResults.value = results;
 
-      if (isRollResult(newValue)) {
-        recentResults.value = [...recentResults.value, newValue];
+  if (results.length) {
+    setTimeout(() => {
+      for (const r of results) {
+        const result = diceStore.results.find((r2) => r2.id === r.id);
 
-        // remove result after 5 seconds
-        setTimeout(() => {
-          recentResults.value = recentResults.value.filter(
-            (result) => result.id !== newValue.id
-          );
-        }, 5000);
+        if (result) {
+          result.shown = true;
+        }
       }
-    }
+    }, 5000);
   }
-);
+});
 </script>
 
 <style scoped>
-ion-fab {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--ion-margin, 1em);
-  z-index: 20;
-
-  min-width: 60vw;
-  max-width: 60vw;
+ion-card {
+  width: 90%;
 }
 
 .result-list {
+  position: absolute;
+  bottom: 0;
+
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: stretch;
+
   width: 100%;
+
   gap: var(--ion-margin, 1em);
+
+  z-index: 20;
 }
 
 .roll-results-move,

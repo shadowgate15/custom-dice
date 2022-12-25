@@ -27,6 +27,8 @@
         />
       </ion-list>
     </ion-content>
+
+    <RollResults />
   </ion-page>
 </template>
 
@@ -48,6 +50,7 @@ import { ref } from "vue";
 import DiceGroupListItem from "@/components/DiceGroupListItem";
 import AddModal from "@/components/AddModal";
 import { useDiceGroupsStore, DiceGroup } from "@/stores/dice-groups";
+import RollResults from "@/components/RollResults.vue";
 
 const page = ref<typeof IonPage>();
 
