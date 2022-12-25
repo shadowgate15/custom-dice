@@ -9,10 +9,15 @@
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet } from "@ionic/vue";
 import { onMounted } from "vue";
-import { initDiceBox } from "@/composables/dice-box";
+import { initDiceBox, orientationChange } from "@/composables/dice-box";
 
 onMounted(async () => {
   await initDiceBox("#dice-canvas");
+
+  // trigger resize after screen orientation has changed
+  window.screen.orientation.addEventListener("change", () => {
+    orientationChange();
+  });
 });
 </script>
 

@@ -24,7 +24,7 @@ export async function initDiceBox(id: string) {
   const diceStore = useDiceGroupsStore();
 
   diceBox = new DiceBox(id, {
-    scale: 4,
+    scale: getScale(),
     throwForce: 10,
     themeColor: COLOR_SELECT["peter river"],
     onRollComplete: async (results: RollGroup[]) => {
@@ -75,4 +75,18 @@ export async function rollDice(
     uuid = id;
     await diceBox.roll(notation, options);
   }
+}
+
+export function orientationChange() {
+  if (diceBox) {
+    diceBox.updateConfig({
+      scale: getScale(),
+    });
+
+    window.dispatchEvent(new Event("resize"));
+  }
+}
+
+function getScale() {
+  return window.screen.orientation.type.indexOf("portrait") > -1 ? 4 : 8;
 }
