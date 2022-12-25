@@ -52,8 +52,12 @@ export enum DiceThemes {
 
 // https://fantasticdice.games/docs/usage/methods#options
 export interface DiceOptions {
+  /** the theme's 'systemName' for this roll */
   theme?: DiceThemes;
+
+  /** HEX value for the theme's material color */
   themeColor?: string;
+
   newStartPoint?: boolean;
 }
 
@@ -106,20 +110,30 @@ export interface RollGroup {
 }
 
 export interface RollResult {
+  /** the id of this result */
   id: string;
+
+  /** the id of the dice group */
   uuid: string;
+
+  /** the results of the roll */
   results: RollGroup[];
+
+  /** the total of the roll */
   total: number;
+
+  /** the date of the roll */
   date: dayjs.Dayjs;
+
+  /** whether or not the result has been shown yet */
   shown?: boolean;
 }
 
-export function isRollResult(obj: any): obj is RollResult {
-  return obj && obj.id && obj.uuid && obj.results && obj.total && obj.date;
-}
-
 export interface DiceGroupsState {
+  /** the dice groups */
   groups: Map<string, DiceGroup>;
+
+  /** the results of the rolls */
   results: RollResult[];
 }
 
